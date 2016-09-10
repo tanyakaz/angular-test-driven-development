@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
+var karma = require('karma').server;
 
 gulp.task('serve',['server'],function(){
    browserSync.init({
@@ -15,6 +16,14 @@ gulp.task('serve',['server'],function(){
 
    gulp.watch(['app/**/*.*'])
       .on('change',browserSync.reload);
+});
+
+gulp.task('test-browser', function() {
+   karma.start({
+      configFile: __dirname + '/karma.conf.js',
+      singleRun: true,
+      reporters: ['mocha']
+   });
 });
 
 
