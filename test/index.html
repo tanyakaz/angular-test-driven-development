@@ -3,10 +3,21 @@
 <head>
    <meta charset="UTF-8">
    <title>Mocha spec runner</title>
-   <script src="bower_components/angular/angular.js"></script>
+   <link rel="stylesheet" href="/bower_components/mocha/mocha.css" />
+   <script src="/bower_components/angular/angular.js"></script>
 </head>
 <body ng-app="addressBook">
-   <h1>Test</h1>
+   <div id="mocha"></div>
+   <script src="/bower_components/mocha/mocha.js"></script>
+   <script src="/bower_components/chai/chai.js"></script>
+   <script>
+      mocha.setup('bdd');
+   </script>
+
+   <script src="main.js"></script>
+   <script src="main.spec.js"></script>
+   <script>
+      mocha.run();
+   </script>
 </body>
-<script src="main.js"></script>
 </html>
