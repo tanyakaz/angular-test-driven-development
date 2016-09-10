@@ -5,10 +5,12 @@ var assert = chai.assert;
 var expect = chai.expect;
 
 describe('The address book app', function() {
-   describe('the contact service', function() {
-      var contactService;
-      var $httpBackend;
+   var contactService;
+   var $httpBackend;
+   var $scope;
+   var $controller;
 
+   describe('the contact service', function() {
       beforeEach(function() {
          module('addressBook');
          inject(function($injector) {
@@ -26,6 +28,72 @@ describe('The address book app', function() {
             .expectGET('http://localhost:9001/contacts')
             .respond(200, []);
          $httpBackend.flush();
+      });
+   });
+
+   describe('the contact controller', function() {
+      beforeEach(function() {
+         module('addressBook');
+         inject(function($injector, $rootScope) {
+            $scope = $rootScope.$new();
+            contactService = $injector.get('contactService');
+            $httpBackend = $injector.get('$httpBackend');
+            $controller = $injector.get('$controller');
+         });
+      });
+
+      it('should store an array of contacts in scope', function() {
+         $controller('contactController',{
+            $scope: $scope,
+            contactService: contactService
+         });
+
+         assert.isArray($scope.contacts);
+      });
+   });
+
+   describe('the proper case filter', function() {
+      var properCaseFilter;
+
+      beforeEach(function() {
+         module('addressBook');
+         inject(function($injector) {
+            properCaseFilter = $injector.get('$filter')('properCase')
+         });
+      });
+
+      it('should proper case a string', function() {
+         expect(properCaseFilter('anna maria')).to.equal('Anna Maria');
+         expect(properCaseFilter('jesus christ')).to.not.equal('Someone Christ');
+      });
+
+      it('should throw an error if passed something other than a string', function() {
+         assert.throws(function() {
+            properCaseFilter([]);
+         });
+
+         assert.throws(function() {
+            properCaseFilter(1234);
+         });
+      });
+   });
+
+   describe('avatar', function() {
+      beforeEach(function() {
+         module('addressBook');
+      });
+
+      it('should display the capitalized first letter', function() {
+         inject(function($rootScope, $compile) {
+            $scope = $rootScope.$new();
+            $scope.contact = { name: 'tatiana campbell'};
+            var element = $compile('<avatar name="contact.name"></avatar>')($scope);
+            $scope.$digest();
+
+            var dirText = element.text();
+
+            expect(dirText).to.equal('T');
+         });
       });
    });
 });
