@@ -20,12 +20,12 @@ gulp.task('serve',['server'],function(){
       .on('change',browserSync.reload);
 });
 
-gulp.task('test-browser', function(done) {
+gulp.task('test-browser', function() {
    karma.start({
       configFile: __dirname + '/karma.conf.js',
       singleRun: true,
       reporters:['mocha','coverage']
-   }, done);
+   });
 });
 
 

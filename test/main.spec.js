@@ -96,4 +96,33 @@ describe('The address book app', function() {
          });
       });
    });
+
+   describe('chart', function() {
+      beforeEach(function() {
+         module('addressBook');
+      });
+
+      it('should generate an SVG with proper number of bars', function() {
+         inject(function($rootScope, $compile) {
+            $scope = $rootScope.$new();
+            $scope.data = [{
+               letter: 'A',
+               frequency: 0.7
+            }, {
+               letter: 'B',
+               frequency: 0.5
+            }, {
+               letter: 'C',
+               frequency: 0.6
+            }];
+            var element = $compile('<chart data="data"></chart>')($scope);
+            //$scope.$digest();
+
+            var svg = $('svg');
+            var numBars = svg.find('rect').length;
+            expect(svg.length).to.equal(1);
+            expect(numBars).to.equal(3);
+         });
+      });
+   });
 });

@@ -4,6 +4,7 @@
    <meta charset="UTF-8">
    <title>TDD</title>
    <script src="/bower_components/angular/angular.js"></script>
+   <script src="/bower_components/d3/d3.js"></script>
 </head>
 <body ng-app="addressBook">
    <h1>Test</h1>
@@ -15,6 +16,35 @@
          </avatar>
       </div>
    </div>
+   <chart
+      data="[{
+               letter: 'A',
+               frequency: 0.7
+            }, {
+               letter: 'B',
+               frequency: 0.5
+            }, {
+               letter: 'C',
+               frequency: 0.6
+            }, {
+               letter: 'D',
+               frequency: 0.9
+            }, {
+               letter: 'E',
+               frequency: 0.95
+            }, {
+               letter: 'F',
+               frequency: 0.34
+            }, {
+               letter: 'G',
+               frequency: 0.53
+            }, {
+               letter: 'H',
+               frequency: 0.67
+            }, {
+               letter: 'I',
+               frequency: 0.75
+            }]"></chart>
 </body>
 <script src="main.js"></script>
 </html>
