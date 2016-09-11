@@ -1,0 +1,1 @@
+Simple Angular app with Karma and Protractor tests running with Gulp
