@@ -23,7 +23,7 @@ gulp.task('test-browser', function() {
    karma.start({
       configFile: __dirname + '/karma.conf.js',
       singleRun: true,
-      reporters: ['mocha']
+      reporters:['mocha','coverage']
    });
 });
 
@@ -42,6 +42,16 @@ gulp.task('serve-test',function(){
 
    gulp.watch(['app/**/*.*'])
       .on('change',browserSync.reload);
+});
+
+gulp.task('serve-coverage', ['test-browser'], function(){
+   browserSync.init({
+      notify: false,
+      port: 7777,
+      server:{
+         baseDir: ["test/coverage"]
+      }
+   });
 });
 
 gulp.task('server', function() {
